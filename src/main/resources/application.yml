@@ -6,10 +6,10 @@ server:
 info:
   app:
     name: chat-producer
-    host: /chat-producer
+    version: 0.0.1
+    host: ${spring_application_host}
     base-path: ${spring_application_base_path:}
     description: This service sends messages to Kafka Topics notifications
-    version: 0.0.1
 
 spring:
   application:

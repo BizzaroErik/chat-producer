@@ -20,20 +20,17 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
-    implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     // Kafka and cloud event dependencies
     //implementation("org.springframework.kafka:spring-kafka:2.7.6")
     //implementation("io.cloudevents:cloudevents-kafka:2.5.0")
-    implementation("io.cloudevents:cloudevents-json-jackson:2.5.0")
+    //implementation("io.cloudevents:cloudevents-json-jackson:2.5.0")
 
-    implementation("com.google.guava:guava:32.0.1-android")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
-    implementation("org.projectlombok:lombok:1.18.22")
-    annotationProcessor("org.projectlombok:lombok")
+    implementation("org.projectlombok:lombok:1.18.30")
+    annotationProcessor("org.projectlombok:lombok:1.18.30")
     implementation("net.logstash.logback:logstash-logback-encoder:7.0.1")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")

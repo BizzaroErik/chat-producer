@@ -9,23 +9,23 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 
 @Configuration
 @RequiredArgsConstructor
-@Component
 public class SwaggerConfig {
 
     @Value("${info.app.name}")
-    private final String appName = "chat-producer";
+    private final String appName;
     @Value("${info.app.version}")
     private final String version;
     @Value("${info.app.host:}")
     private final String appHost;
     @Value("${info.app.base-path:}")
-    private final String appBasePath = "";
+    private final String appBasePath;
+    @Value("${info.app.description:}")
+    private final String description;
 
     @Bean
     public OpenAPI apiEndpointsInfo() {
@@ -33,7 +33,7 @@ public class SwaggerConfig {
         serverVariable.setDefault(appBasePath);
         OpenAPI openApi = new OpenAPI()
                 .info(new Info().title(appName)
-                        .description("Chat app")
+                        .description(description)
                         .version(version));
         return openApi.servers(Collections.singletonList(new Server().url(appHost)
                 .variables(new ServerVariables()
