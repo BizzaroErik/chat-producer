@@ -1,15 +1,13 @@
 package com.bizzaroerik.chatproducer.configuration.kafka;
 
 import lombok.Getter;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-/**
- *
- */
 @Getter
 @Component
 public class KafkaProducerPropertiesConfig {
-    /*
     @NonNull
     @Value("${spring.kafka.producer.bootstrap-servers}")
     String bootstrapServers;
@@ -45,7 +43,7 @@ public class KafkaProducerPropertiesConfig {
     String enableIdempotence;
 
     @Value("${spring.kafka.producer.transactionalId}")
-    String transactionalId;*/
+    String transactionalId;
 
 //    @NonNull
 //    @Value("${spring.kafka.properties.security.protocol}")

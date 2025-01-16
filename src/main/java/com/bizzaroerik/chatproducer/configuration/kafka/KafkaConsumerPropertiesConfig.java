@@ -1,6 +1,7 @@
 package com.bizzaroerik.chatproducer.configuration.kafka;
 
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,9 +10,7 @@ import org.springframework.stereotype.Component;
 @Getter
 @Component
 public class KafkaConsumerPropertiesConfig {
-/*
 
-    @NonNull
     @Value("${spring.kafka.consumer.bootstrap-servers}")
     String bootstrapServers;
 
@@ -35,7 +34,6 @@ public class KafkaConsumerPropertiesConfig {
 
     @Value("${spring.kafka.consumer.heartbeat-interval-ms}")
     String heartbeatIntervalMs;
-*/
 
 //    @NonNull
 //    @Value("${spring.kafka.properties.security.protocol}")

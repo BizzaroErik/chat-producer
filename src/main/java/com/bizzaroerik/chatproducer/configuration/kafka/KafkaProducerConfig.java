@@ -1,7 +1,17 @@
 package com.bizzaroerik.chatproducer.configuration.kafka;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.core.DefaultKafkaProducerFactory;
+import org.springframework.kafka.core.KafkaTemplate;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Kafka producer configs loaded from application properties
@@ -9,21 +19,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @RequiredArgsConstructor
 public class KafkaProducerConfig {
-    /*
-    private final KafkaProducerPropertiesConfig properties = new KafkaProducerPropertiesConfig();
 
-    *//**
-     * @return
-     *//*
+    @NonNull
+    private final KafkaProducerPropertiesConfig properties;
 
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate() throws UnknownHostException {
         return new KafkaTemplate<>(producerFactory());
     }
 
-    *//**
+    /**
      * @return
-     *//*
+     */
     private DefaultKafkaProducerFactory<String, String> producerFactory() throws UnknownHostException {
         Map<String, Object> configProps = new HashMap<>();
         final String hostName = InetAddress.getLocalHost().getHostName();
@@ -44,8 +51,8 @@ public class KafkaProducerConfig {
         DefaultKafkaProducerFactory<String, String> factory = new DefaultKafkaProducerFactory<>(configProps);
         if (properties.getTransactionalId() != null) {
             factory.setTransactionIdPrefix(properties.getTransactionalId() + "_" + InetAddress.getLocalHost().getHostName());
-            factory.setProducerPerConsumerPartition(false);
+            //factory.setProducerPerConsumerPartition(false);
         }
         return factory;
-    }*/
+    }
 }

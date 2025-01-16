@@ -24,9 +24,9 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     // Kafka and cloud event dependencies
-    //implementation("org.springframework.kafka:spring-kafka:2.7.6")
-    //implementation("io.cloudevents:cloudevents-kafka:2.5.0")
-    //implementation("io.cloudevents:cloudevents-json-jackson:2.5.0")
+    implementation("org.springframework.kafka:spring-kafka")
+    implementation("io.cloudevents:cloudevents-kafka:4.0.1")
+    implementation("io.cloudevents:cloudevents-json-jackson:4.0.1")
 
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
     implementation("org.projectlombok:lombok:1.18.30")
