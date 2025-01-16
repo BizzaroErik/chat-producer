@@ -7,10 +7,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 
 @RestController
@@ -22,12 +25,13 @@ public class Messenger {
     @NonNull
     private final MessengerService messengerService;
 
-    @GetMapping(value = "/user/message")
+    @PostMapping(value = "/user/message", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     @Operation(summary = "Send messages to topic")
-    public ResponseEntity<String> sendMessage(@RequestParam String message) {
+    public ResponseEntity<String> sendMessage(
+            @RequestHeader String userId,
+            @RequestHeader String volume,
+            @RequestBody String message) {
 
-        var volume = "45";
-        var userId = "user";
         MDC.put("VOLUME", volume);
         MDC.put("USER_ID", userId);
         MDC.put("MESSAGE", message);
