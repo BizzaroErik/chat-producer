@@ -1,7 +1,6 @@
 package com.bizzaroerik.chatproducer.configuration.kafka;
 
-import io.cloudevents.CloudEvent;
-import io.cloudevents.kafka.CloudEventDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,29 +31,26 @@ public class KafkaConsumerConfig {
      * @return
      */
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<String, JsonNode> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, JsonNode> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.RECORD);
         factory.getContainerProperties().setSyncCommits(true);
-        factory.setRecordFilterStrategy(consumerRecord -> !(consumerRecord.key().contains("spectrum-")));
+        factory.setRecordFilterStrategy(consumerRecord -> !(consumerRecord.key().contains("chat-")));
         return factory;
     }
 
     @Bean(name = "cloudEventListenerContainerFactory")
-    public ConcurrentKafkaListenerContainerFactory<String, CloudEvent> cloudEventListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, CloudEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<String, JsonNode> cloudEventListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, JsonNode> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(cloudEventConsumerFactory());
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.RECORD);
         factory.getContainerProperties().setSyncCommits(true);
-        factory.setRecordFilterStrategy(cloudEvent -> !(cloudEvent.value().getType().equals("MESSAGE_EVENT")));
+        //factory.setRecordFilterStrategy(cloudEvent -> !(cloudEvent.value().getType().equals("MESSAGE_EVENT")));
         return factory;
     }
 
-    /**
-     * @return
-     */
-    private DefaultKafkaConsumerFactory<String, String> consumerFactory() {
+    private DefaultKafkaConsumerFactory<String, JsonNode> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrapServers());
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, properties.getAutoOffsetReset());
@@ -73,7 +69,7 @@ public class KafkaConsumerConfig {
         return new DefaultKafkaConsumerFactory<>(props);
     }
 
-    private DefaultKafkaConsumerFactory<String, CloudEvent> cloudEventConsumerFactory() {
+    private DefaultKafkaConsumerFactory<String, JsonNode> cloudEventConsumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrapServers());
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, properties.getAutoOffsetReset());
@@ -85,7 +81,7 @@ public class KafkaConsumerConfig {
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, properties.getKeyDeserializer());
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, properties.getValueDeserializer());
         props.put(ErrorHandlingDeserializer.KEY_DESERIALIZER_CLASS, StringDeserializer.class);
-        props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, CloudEventDeserializer.class);
+        props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, ValueDeserializer.class);
         props.put(ErrorHandlingDeserializer.VALUE_FUNCTION, DeserializationErrorHandler.class);
 /*        props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, properties.getSecurityProtocol());
         props.put("sasl.mechanism", properties.getSaslMechanism());

@@ -2,7 +2,7 @@ package com.bizzaroerik.chatproducer.kafka.consumer;
 
 
 import com.bizzaroerik.chatproducer.exception.ValueDeserializationException;
-import io.cloudevents.CloudEvent;
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -22,7 +22,7 @@ public class MessageCompleteConsumer {
             clientIdPrefix = "${spring.kafka.consumer.client-id}",
             topics = {"${spring.kafka.listener.chat-success-consumer.topic}"},
             concurrency = "${spring.kafka.consumer.concurrency:1}")
-    public void messageCompleteConsumer(final ConsumerRecord<String, CloudEvent> consumerRecord) throws ValueDeserializationException {
+    public void messageCompleteConsumer(final ConsumerRecord<String, JsonNode> consumerRecord) throws ValueDeserializationException {
         log.debug("Successfully consumed message");
     }
 }

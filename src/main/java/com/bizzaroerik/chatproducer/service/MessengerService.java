@@ -1,5 +1,7 @@
 package com.bizzaroerik.chatproducer.service;
 
+import com.bizzaroerik.chatproducer.domain.MessageRequest;
+import com.bizzaroerik.chatproducer.domain.MessageSentResponse;
 import com.bizzaroerik.chatproducer.kafka.producer.MessageProducer;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +18,11 @@ public class MessengerService {
     @NonNull
     private final MessageProducer messageProducer;
 
-    public String sendMessage(String userId, String volume, String message) {
-        messageProducer.send(userId, message);
-        return "Successfully Sent: " + Instant.now() + "\n" + message;
+    public MessageSentResponse sendMessage(MessageRequest message) {
+        messageProducer.send(message);
+        return MessageSentResponse.builder()
+                .message(message.getMessage())
+                .sentDateTime(Instant.now())
+                .build();
     }
 }

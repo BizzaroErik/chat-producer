@@ -1,8 +1,10 @@
 package com.bizzaroerik.chatproducer.kafka.producer;
 
-import lombok.NonNull;
+import com.bizzaroerik.chatproducer.domain.MessageRequest;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -12,17 +14,21 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MessageProducer {
 
-    @NonNull
+    @NotNull
     @Value("${topic.chat-topic}")
     private final String topicName;
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, MessageRequest> kafkaTemplate;
 
     private final CustomProducerListener producerListener;
 
-    public void send(final String userId, final String data) {
+    public void send(final MessageRequest message) {
         kafkaTemplate.executeInTransaction(t -> {
-            t.send(topicName, "chat-" + userId + "-" + data, data);
+            String key = "chat-" + message.getUserId() + "-" + message.getVolume();
+            ProducerRecord<String, MessageRequest> record = new ProducerRecord<>(topicName, key, message);
+//            Headers headers = record.headers();
+//            headers.add("content-type", "application/cloudevents+json".getBytes());
+            t.send(record);
             return true;
         });
     }

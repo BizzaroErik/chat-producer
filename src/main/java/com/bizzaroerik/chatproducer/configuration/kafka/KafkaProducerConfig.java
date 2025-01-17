@@ -1,5 +1,6 @@
 package com.bizzaroerik.chatproducer.configuration.kafka;
 
+import com.bizzaroerik.chatproducer.domain.MessageRequest;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -24,14 +25,14 @@ public class KafkaProducerConfig {
     private final KafkaProducerPropertiesConfig properties;
 
     @Bean
-    public KafkaTemplate<String, String> kafkaTemplate() throws UnknownHostException {
+    public KafkaTemplate<String, MessageRequest> kafkaTemplate() throws UnknownHostException {
         return new KafkaTemplate<>(producerFactory());
     }
 
     /**
      * @return
      */
-    private DefaultKafkaProducerFactory<String, String> producerFactory() throws UnknownHostException {
+    private DefaultKafkaProducerFactory<String, MessageRequest> producerFactory() throws UnknownHostException {
         Map<String, Object> configProps = new HashMap<>();
         final String hostName = InetAddress.getLocalHost().getHostName();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrapServers());
@@ -48,7 +49,7 @@ public class KafkaProducerConfig {
 //        configProps.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, properties.getSecurityProtocol());
 //        configProps.put("sasl.mechanism", properties.getSaslMechanism());
 //        configProps.put("sasl.jaas.config", properties.getJaasConfig());
-        DefaultKafkaProducerFactory<String, String> factory = new DefaultKafkaProducerFactory<>(configProps);
+        DefaultKafkaProducerFactory<String, MessageRequest> factory = new DefaultKafkaProducerFactory<>(configProps);
         if (properties.getTransactionalId() != null) {
             factory.setTransactionIdPrefix(properties.getTransactionalId() + "_" + InetAddress.getLocalHost().getHostName());
             //factory.setProducerPerConsumerPartition(false);
