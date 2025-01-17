@@ -26,8 +26,6 @@ public class MessageProducer {
         kafkaTemplate.executeInTransaction(t -> {
             String key = "chat-" + message.getUserId() + "-" + message.getVolume();
             ProducerRecord<String, MessageRequest> record = new ProducerRecord<>(topicName, key, message);
-//            Headers headers = record.headers();
-//            headers.add("content-type", "application/cloudevents+json".getBytes());
             t.send(record);
             return true;
         });

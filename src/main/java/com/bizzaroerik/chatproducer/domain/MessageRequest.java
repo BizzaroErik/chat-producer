@@ -7,6 +7,6 @@ import lombok.Value;
 @Builder
 public class MessageRequest {
     String userId;
-    String volume;
+    Volume volume;
     String message;
 }

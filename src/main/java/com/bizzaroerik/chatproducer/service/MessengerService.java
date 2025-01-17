@@ -21,7 +21,7 @@ public class MessengerService {
     public MessageSentResponse sendMessage(MessageRequest message) {
         messageProducer.send(message);
         return MessageSentResponse.builder()
-                .message(message.getMessage())
+                .userId(message.getUserId())
                 .sentDateTime(Instant.now())
                 .build();
     }

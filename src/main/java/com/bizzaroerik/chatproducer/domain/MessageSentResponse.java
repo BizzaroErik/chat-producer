@@ -9,6 +9,6 @@ import java.time.Instant;
 @Value
 @Builder
 public class MessageSentResponse {
-    String message;
+    String userId;
     Instant sentDateTime;
 }

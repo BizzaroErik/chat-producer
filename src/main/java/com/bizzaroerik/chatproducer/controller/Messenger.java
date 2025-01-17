@@ -31,12 +31,12 @@ public class Messenger {
     public ResponseEntity<MessageSentResponse> sendMessage(
             @RequestBody MessageRequest message) {
 
-        MDC.put("VOLUME", message.getVolume());
+        MDC.put("VOLUME", message.getVolume().name());
         MDC.put("USER_ID", message.getUserId());
         MDC.put("MESSAGE", message.getMessage());
 
         log.info("\n UserMessageRequest:: \n User:: {}, Volume:: {} , Message:: {}",
-                message.getUserId(), message.getVolume(), message.getMessage());
+                message.getUserId(), message.getVolume().name(), message.getMessage());
 
         var sentMessage = messengerService.sendMessage(message);
 
