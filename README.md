@@ -27,6 +27,6 @@ For further reference, please consider the following sections for working with k
 
 ###### Swagger
 
-http://localhost:8080/pfs-order-dil/swagger-ui/index.html 
+http://localhost:8080/chat-producer/swagger-ui/index.html 
 
 
