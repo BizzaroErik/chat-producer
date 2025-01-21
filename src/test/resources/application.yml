@@ -1,0 +1,64 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /chat-producer
+
+info:
+  app:
+    name: chat-producer
+    version: 0.0.1
+    host: chat-producer
+    base-path: /chat-producer
+    description: This service sends messages to Kafka Topics notifications
+
+spring:
+  application:
+    name: chat-producer
+    host: /chat-producer
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      client-id: chat-producer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: all
+      retries: 5
+      batch-size: 16384
+      buffer-memory: 33554432
+      linger-ms: 1
+      enable-Idempotence: true
+      transactionalId: ChatTransaction
+    consumer:
+      bootstrap-servers: localhost:9092
+      concurrency: 1
+      client-id: chat-consumer
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      auto-offset-reset: latest
+      isolation-level: read_committed
+      max-poll-records: 10
+      session-time-out-ms: 60000
+      heartbeat-interval-ms: 6000
+      properties:
+        spring:
+          json:
+            value:
+              default:
+                type: com.fasterxml.jackson.databind.JsonNode
+    listener:
+      chat-success-consumer:
+        groupId: message-success-group
+        topic: chat-topic
+topic:
+  chat-topic: chat-topic
+
+#Actuator Settings
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,env,loggers
+      base-path: /api/v1/actuator
+  endpoint:
+    health:
+      show-details: always

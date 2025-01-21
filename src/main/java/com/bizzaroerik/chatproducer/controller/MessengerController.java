@@ -21,7 +21,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping()
 @RequiredArgsConstructor
 @Slf4j
-public class Messenger {
+public class MessengerController {
 
     @NonNull
     private final MessengerService messengerService;

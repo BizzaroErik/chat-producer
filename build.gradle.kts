@@ -23,20 +23,20 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
-    // Kafka and cloud event dependencies
     implementation("org.springframework.kafka:spring-kafka")
     implementation("io.cloudevents:cloudevents-kafka:4.0.1")
     implementation("io.cloudevents:cloudevents-json-jackson:4.0.1")
 
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
-    implementation("org.projectlombok:lombok:1.18.30")
-    annotationProcessor("org.projectlombok:lombok:1.18.30")
-    implementation("net.logstash.logback:logstash-logback-encoder:7.0.1")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.3")
+    implementation("org.projectlombok:lombok:1.18.36")
+    annotationProcessor("org.projectlombok:lombok:1.18.36")
 
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.36")
+    testImplementation("org.projectlombok:lombok:1.18.36")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testRuntimeOnly("org.junit.platform:junit-platform-runner:1.7.0")
-    testImplementation("org.assertj:assertj-core:3.21.0")
-    //testImplementation("org.springframework.kafka:spring-kafka-test:2.7.6")
+    testImplementation("org.assertj:assertj-core:3.27.3")
+    //Vulnerability possible, no new version yet
+    testImplementation("org.springframework.kafka:spring-kafka-test:3.3.1")
 }
 
 tasks.withType<Test> {
