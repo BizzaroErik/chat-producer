@@ -21,7 +21,7 @@ public class MessageServiceTest {
     MessengerService messengerService;
 
     @Test
-    void testCompleteOrderInvoiceRequestSuccess() {
+    void testMessengerServiceWhenValidKafkaMessageThenExpectValidUserResponse() {
         var userId = "aptapt";
         var request = MessageRequest.builder().userId(userId).volume(Volume.WHISPER).message("Hello Kafka!").build();
         var messageSentResponse = messengerService.sendMessage(request);

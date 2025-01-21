@@ -26,7 +26,7 @@ class MessageControllerTest {
     MessengerController messengerController;
 
     @Test
-    void testOrderCompleteSuccess() {
+    void testMessengerControllerWhenValidRequestThenExpect200() {
         var userId = "aptapt";
         var request = MessageRequest.builder().userId(userId).volume(Volume.WHISPER).message("Hello Kafka!").build();
         var response = MessageSentResponse.builder().userId(userId).build();
@@ -37,7 +37,7 @@ class MessageControllerTest {
     }
 
     @Test
-    void testOrderCompleteWhenServiceThrowsError() {
+    void testMessengerControllerWhenServiceErrorThenThrowRunTimeException() {
         var userId = "tpatpa";
         var request = MessageRequest.builder().userId(userId).volume(Volume.WHISPER).message("Hello Kafka!").build();
         when(messengerService.sendMessage(request)).thenThrow(RuntimeException.class);
